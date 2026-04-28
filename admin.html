@@ -1,279 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Admin — FSMOne Community</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --green: #25d366;
-      --green-dark: #128c50;
-      --green-dim: rgba(37,211,102,0.12);
-      --ink: #0d1117;
-      --ink-soft: #374151;
-      --ink-muted: #6b7280;
-      --surface: #ffffff;
-      --surface-2: #f9fafb;
-      --border: #e5e7eb;
-      --radius: 14px;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --green:#25d366;--green-dk:#0e8a40;--green-bg:#f0fdf4;
+      --ink:#111827;--ink-s:#374151;--ink-m:#6b7280;
+      --bg:#f8fafc;--surface:#fff;--border:#e5e7eb;--radius:12px;
     }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--surface-2);
-      color: var(--ink);
-      min-height: 100vh;
-    }
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+    a{color:inherit;text-decoration:none}
 
     /* ── Login ── */
-    #login-screen {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .login-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 32px;
-      width: 100%; max-width: 360px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-      text-align: center;
-    }
-    .login-card h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px; margin-bottom: 6px;
-    }
-    .login-card p { font-size: 14px; color: var(--ink-muted); margin-bottom: 24px; }
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .login-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:34px 30px;width:100%;max-width:340px;box-shadow:0 4px 20px rgba(0,0,0,.06);text-align:center}
+    .login-card h1{font-family:'Fraunces',serif;font-style:italic;font-size:24px;font-weight:300;margin-bottom:6px}
+    .login-card p{font-size:13px;color:var(--ink-m);margin-bottom:22px}
 
-    /* ── Main layout ── */
-    #admin-screen { display: none; }
-    .topbar {
-      background: white;
-      border-bottom: 1px solid var(--border);
-      padding: 14px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 10;
-    }
-    .topbar-left { display: flex; align-items: center; gap: 10px; }
-    .topbar-logo {
-      width: 34px; height: 34px; background: var(--green);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    }
-    .topbar-logo svg { width: 18px; height: 18px; fill: white; }
-    .topbar-title { font-weight: 600; font-size: 15px; }
-    .topbar-right { display: flex; align-items: center; gap: 10px; }
-
-    .main { padding: 28px; max-width: 1100px; margin: 0 auto; }
+    /* ── Admin layout ── */
+    #admin-screen{display:none}
+    .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    .topbar-brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+    .topbar-dot{width:10px;height:10px;border-radius:50%;background:var(--green)}
+    .main{padding:24px;max-width:1080px;margin:0 auto}
 
     /* ── Metrics ── */
-    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
-    .metric-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-    }
-    .metric-num { font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
-    .metric-label { font-size: 13px; color: var(--ink-muted); }
-    .metric-card.green .metric-num { color: var(--green-dark); }
-    .metric-card.amber .metric-num { color: #d97706; }
-    .metric-card.red .metric-num { color: #dc2626; }
-    .metric-card.blue .metric-num { color: #2563eb; }
+    .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+    .metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+    .metric-n{font-size:30px;font-weight:700;line-height:1;margin-bottom:4px}
+    .metric-l{font-size:12px;color:var(--ink-m)}
+    .m-amber .metric-n{color:#b45309}
+    .m-green .metric-n{color:var(--green-dk)}
+    .m-red   .metric-n{color:#b91c1c}
+    .m-blue  .metric-n{color:#1d4ed8}
 
     /* ── Panels ── */
-    .panels { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
-    @media (max-width: 780px) { .panels { grid-template-columns: 1fr; } }
-
-    .panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .panel-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .panel-title { font-weight: 600; font-size: 15px; }
-    .panel-body { padding: 16px 20px; }
+    .panels{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media(max-width:760px){.panels{grid-template-columns:1fr}}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .ph{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .ph-title{font-weight:600;font-size:14px}
+    .pb{padding:15px 18px}
 
     /* ── Table ── */
-    .requests-table { width: 100%; border-collapse: collapse; }
-    .requests-table th {
-      text-align: left; font-size: 11px; font-weight: 600;
-      color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em;
-      padding: 8px 12px; border-bottom: 1px solid var(--border);
-    }
-    .requests-table td {
-      padding: 11px 12px; font-size: 14px;
-      border-bottom: 1px solid #f3f4f6; vertical-align: middle;
-    }
-    .requests-table tr:last-child td { border-bottom: none; }
-    .requests-table tr:hover td { background: #fafafa; }
+    .tbl{width:100%;border-collapse:collapse}
+    .tbl th{text-align:left;font-size:11px;font-weight:600;color:var(--ink-m);text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;border-bottom:1px solid var(--border)}
+    .tbl td{padding:10px 12px;font-size:13px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+    .tbl tr:last-child td{border-bottom:none}
+    .tbl tr:hover td{background:#fafafa}
 
-    .name-cell { font-weight: 500; }
-    .meta-cell { font-size: 12px; color: var(--ink-muted); }
+    /* Badges */
+    .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+    .badge-pending{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+    .badge-approved{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+    .badge-rejected{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
 
-    .badge {
-      display: inline-block; font-size: 11px; font-weight: 600;
-      padding: 3px 9px; border-radius: 20px;
-    }
-    .badge-pending { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
-    .badge-approved { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
-    .badge-rejected { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
-    .badge-matched { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
-    .badge-unmatched { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:9px;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--green);color:#fff}
+    .btn-primary:hover{background:#1fbe59}
+    .btn-outline{background:transparent;color:var(--ink-s);border:1px solid var(--border)}
+    .btn-outline:hover{background:var(--bg)}
+    .btn-full{width:100%;justify-content:center}
+    .btn-sm{padding:4px 11px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid}
+    .btn-approve{background:#f0fdf4;color:#166534;border-color:#86efac}
+    .btn-approve:hover{background:#dcfce7}
+    .btn-reject{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+    .btn-reject:hover{background:#fee2e2}
+    .action-btns{display:flex;gap:5px}
 
-    .action-btns { display: flex; gap: 6px; }
-    .btn-sm {
-      padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
-      cursor: pointer; border: 1px solid; transition: all 0.15s;
+    /* Inputs */
+    input[type=text],input[type=password],input[type=email],textarea,select{
+      width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid var(--border);
+      background:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);
+      outline:none;transition:border-color .18s
     }
-    .btn-approve { background: #f0fdf4; color: #166534; border-color: #86efac; }
-    .btn-approve:hover { background: #dcfce7; }
-    .btn-reject { background: #fef2f2; color: #991b1b; border-color: #fca5a5; }
-    .btn-reject:hover { background: #fee2e2; }
+    input:focus,textarea:focus{border-color:var(--green)}
+    textarea{height:76px;resize:vertical}
+    select{cursor:pointer}
+    .field-lbl{font-size:12px;font-weight:500;color:var(--ink-s);margin-bottom:5px;display:block}
+    .field-hint{font-size:11px;color:var(--ink-m);margin-top:4px;line-height:1.5}
+    .f{margin-bottom:14px}
 
-    /* ── Sidebar ── */
-    .settings-field { margin-bottom: 16px; }
-    .settings-field label { display: block; font-size: 13px; font-weight: 500; color: var(--ink-soft); margin-bottom: 6px; }
-    .settings-field input, .settings-field textarea {
-      width: 100%; padding: 10px 13px; border-radius: 10px;
-      border: 1.5px solid var(--border); background: var(--surface-2);
-      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink);
-      outline: none; transition: border-color 0.2s;
-    }
-    .settings-field textarea { height: 80px; resize: vertical; }
-    .settings-field input:focus, .settings-field textarea:focus { border-color: var(--green); }
+    /* Search bar */
+    .search-bar{display:flex;gap:10px;padding:11px 18px;border-bottom:1px solid var(--border)}
+    .search-bar input{flex:1;font-size:13px}
 
-    /* ── Buttons ── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 10px; border: none;
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      font-weight: 600; cursor: pointer; transition: all 0.15s;
-    }
-    .btn-primary { background: var(--green); color: white; }
-    .btn-primary:hover { background: #1fbe59; }
-    .btn-outline { background: transparent; color: var(--ink-soft); border: 1px solid var(--border); }
-    .btn-outline:hover { background: var(--surface-2); }
-    .btn-full { width: 100%; justify-content: center; }
+    /* Score bar */
+    .score-bar{display:flex;align-items:center;gap:6px}
+    .score-track{flex:1;height:4px;border-radius:2px;background:#e5e7eb;overflow:hidden}
+    .score-fill{height:100%;border-radius:2px;transition:width .3s}
+    .score-num{font-size:11px;color:var(--ink-m);min-width:28px;text-align:right}
+    .score-ref{font-size:11px;color:var(--ink-m);margin-top:2px}
 
-    /* ── Search ── */
-    .search-bar {
-      display: flex; gap: 10px; align-items: center;
-      padding: 12px 20px; border-bottom: 1px solid var(--border);
-    }
-    .search-bar input {
-      flex: 1; padding: 8px 13px; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--surface-2);
-      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); outline: none;
-    }
-    .search-bar input:focus { border-color: var(--green); }
+    /* Referral list */
+    .ref-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+    .ref-row:last-child{border-bottom:none}
+    .ref-rm{background:none;border:none;color:#9ca3af;cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
+    .ref-rm:hover{color:#b91c1c}
 
-    /* ── Referral list sidebar ── */
-    .ref-list { max-height: 220px; overflow-y: auto; }
-    .ref-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px;
-    }
-    .ref-row:last-child { border-bottom: none; }
-    .ref-remove { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 16px; padding: 0 4px; }
-    .ref-remove:hover { color: #dc2626; }
+    /* Threshold slider */
+    input[type=range]{width:100%;accent-color:var(--green);height:4px;border-radius:2px;padding:0}
 
-    /* ── Toast ── */
-    .toast {
-      position: fixed; bottom: 24px; right: 24px;
-      background: var(--ink); color: white;
-      padding: 10px 20px; border-radius: 10px;
-      font-size: 14px; font-weight: 500;
-      opacity: 0; transform: translateY(8px);
-      transition: all 0.25s; pointer-events: none; z-index: 999;
-    }
-    .toast.show { opacity: 1; transform: translateY(0); }
+    /* Toast */
+    .toast{position:fixed;bottom:20px;right:20px;padding:9px 18px;border-radius:10px;font-size:13px;font-weight:500;opacity:0;transform:translateY(6px);transition:all .25s;pointer-events:none;z-index:999;border:1px solid}
+    .toast.show{opacity:1;transform:translateY(0)}
+    .toast-success{background:#f0fdf4;color:#166534;border-color:#86efac}
+    .toast-default{background:var(--ink);color:#fff;border-color:transparent}
 
-    .empty-row { text-align: center; padding: 32px; color: var(--ink-muted); font-size: 14px; }
+    /* Alert */
+    .alert{display:none;padding:11px 14px;border-radius:9px;font-size:13px;line-height:1.6;margin-bottom:14px;border:1px solid}
+    .alert.show{display:block}
+    .alert-error{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+    .alert-info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
 
-    /* ── Shared inputs ── */
-    input[type="password"] {
-      width: 100%; padding: 12px 16px; border-radius: 12px;
-      border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif;
-      font-size: 15px; color: var(--ink); outline: none; margin-bottom: 12px;
-      transition: border-color 0.2s;
-    }
-    input[type="password"]:focus { border-color: var(--green); }
+    /* How scoring works card */
+    .info-card{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--ink-m);line-height:1.7}
+    .info-card strong{color:var(--ink-s)}
   </style>
 </head>
 <body>
 
-<!-- ── Login ── -->
+<!-- Login -->
 <div id="login-screen">
   <div class="login-card">
-    <div style="width:52px;height:52px;background:var(--green);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+    <div style="width:48px;height:48px;background:var(--green);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
     </div>
-    <h1>Admin Login</h1>
-    <p>Enter your password to access the dashboard</p>
-    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()" />
-    <p id="pw-error" style="font-size:13px;color:#dc2626;margin-bottom:12px;display:none;">Incorrect password</p>
+    <h1>Admin login</h1>
+    <p>Enter your password to manage the community</p>
+    <div class="f"><input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')login()"/></div>
+    <p id="pw-error" style="font-size:12px;color:#b91c1c;margin-bottom:10px;display:none">Incorrect password</p>
     <button class="btn btn-primary btn-full" onclick="login()">Login</button>
-    <p style="margin-top:16px;font-size:12px;color:var(--ink-muted);">Default: <code>admin123</code> — change in Settings</p>
+    <p style="margin-top:14px;font-size:11px;color:var(--ink-m)">Default: <code>admin123</code> — change in Settings</p>
   </div>
 </div>
 
-<!-- ── Admin ── -->
+<!-- Admin -->
 <div id="admin-screen">
   <div class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-logo">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.557 4.118 1.532 5.849L.06 23.454a.5.5 0 0 0 .486.624.5.5 0 0 0 .135-.019l5.763-1.527A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.92 0-3.72-.509-5.28-1.396l-.378-.218-3.922 1.039 1.001-3.825-.234-.392A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-      </div>
-      <span class="topbar-title">FSMOne Community Admin</span>
+    <div class="topbar-brand">
+      <div class="topbar-dot"></div>
+      FSMOne Community Admin
     </div>
-    <div class="topbar-right">
-      <a href="index.html" class="btn btn-outline" style="font-size:13px;">View signup page</a>
-      <button class="btn btn-outline" style="font-size:13px;" onclick="exportCSV()">Export CSV</button>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="index.html" class="btn btn-outline">View signup page</a>
+      <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button>
     </div>
   </div>
 
   <div class="main">
-    <div class="metrics" id="metrics-row">
-      <div class="metric-card amber"><div class="metric-num" id="m-pending">0</div><div class="metric-label">Pending review</div></div>
-      <div class="metric-card green"><div class="metric-num" id="m-approved">0</div><div class="metric-label">Approved members</div></div>
-      <div class="metric-card red"><div class="metric-num" id="m-rejected">0</div><div class="metric-label">Rejected</div></div>
-      <div class="metric-card blue"><div class="metric-num" id="m-referrals">0</div><div class="metric-label">FSMOne referrals</div></div>
+    <!-- Metrics -->
+    <div class="metrics">
+      <div class="metric m-amber"><div class="metric-n" id="m-pending">0</div><div class="metric-l">Pending review</div></div>
+      <div class="metric m-green"><div class="metric-n" id="m-approved">0</div><div class="metric-l">Approved members</div></div>
+      <div class="metric m-red">  <div class="metric-n" id="m-rejected">0</div><div class="metric-l">Rejected</div></div>
+      <div class="metric m-blue"> <div class="metric-n" id="m-referrals">0</div><div class="metric-l">FSMOne referrals</div></div>
     </div>
 
     <div class="panels">
-      <!-- Requests panel -->
+      <!-- Main: requests table -->
       <div class="panel">
-        <div class="panel-header">
-          <span class="panel-title">Signup requests</span>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <select id="filter-status" onchange="renderRequests()" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--ink);cursor:pointer;">
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </div>
+        <div class="ph">
+          <span class="ph-title">Signup requests</span>
+          <select id="filter-status" onchange="renderRequests()" style="width:auto;font-size:12px;padding:5px 8px">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
         </div>
         <div class="search-bar">
-          <input type="text" id="search-inp" placeholder="Search name, phone, email..." oninput="renderRequests()" />
+          <input type="text" id="search-inp" placeholder="Search name, phone, email…" oninput="renderRequests()"/>
         </div>
-        <div style="overflow-x:auto;">
-          <table class="requests-table">
+        <div style="overflow-x:auto">
+          <table class="tbl">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Match</th>
+                <th style="min-width:140px">Match score</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -284,38 +195,60 @@
       </div>
 
       <!-- Sidebar -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;flex-direction:column;gap:16px">
 
-        <!-- FSMOne Referral list -->
+        <!-- Referrals panel -->
         <div class="panel">
-          <div class="panel-header">
-            <span class="panel-title">FSMOne referrals</span>
-            <span id="ref-badge" style="font-size:12px;color:var(--ink-muted);">0 names</span>
+          <div class="ph">
+            <span class="ph-title">FSMOne referrals</span>
+            <span id="ref-badge" style="font-size:12px;color:var(--ink-m)">0</span>
           </div>
-          <div class="panel-body">
-            <p style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;line-height:1.55;">Paste names from your FSMOne referral report, or sync via the Chrome extension.</p>
-            <div class="settings-field">
-              <textarea id="bulk-import" placeholder="Tan Wei Ming&#10;Ahmad Bin Ismail&#10;Lee Siew Ling"></textarea>
+          <div class="pb">
+            <div class="info-card">
+              <strong>Paste masked names as-is from FSMOne</strong> — e.g. <code>Gun L**** S****</code><br>
+              The app fuzzy-matches users' real names against the masked format automatically.
+            </div>
+            <div class="f">
+              <label class="field-lbl">Paste from FSMOne referral report</label>
+              <textarea id="bulk-import" placeholder="Gun L**** S****&#10;Ang C*** H**&#10;Leong K** F***"></textarea>
             </div>
             <button class="btn btn-primary btn-full" onclick="importReferrals()">Add names</button>
-            <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;" />
-            <div class="ref-list" id="ref-list"></div>
+            <hr style="border:none;border-top:1px solid var(--border);margin:13px 0"/>
+            <div style="max-height:200px;overflow-y:auto" id="ref-list"></div>
           </div>
         </div>
 
-        <!-- Settings -->
+        <!-- Settings panel -->
         <div class="panel">
-          <div class="panel-header"><span class="panel-title">Settings</span></div>
-          <div class="panel-body">
-            <div class="settings-field">
-              <label>WhatsApp community invite link</label>
-              <input type="text" id="wa-link" placeholder="https://chat.whatsapp.com/..." oninput="saveSettings()" />
+          <div class="ph"><span class="ph-title">Settings</span></div>
+          <div class="pb">
+            <div class="f">
+              <label class="field-lbl">WhatsApp community invite link</label>
+              <input type="text" id="wa-link" placeholder="https://chat.whatsapp.com/…"/>
             </div>
-            <div class="settings-field">
-              <label>Admin password</label>
-              <input type="password" id="admin-pw" placeholder="New password" />
+
+            <div class="f">
+              <label class="field-lbl">Auto-approve threshold</label>
+              <div style="margin-bottom:6px">
+                <input type="range" id="auto-thresh" min="50" max="100" value="80" oninput="updateThresholdLabel(this.value)"/>
+              </div>
+              <div style="font-size:12px;font-weight:500" id="thresh-label">80% — High confidence</div>
+              <div class="field-hint">Requests with a match score at or above this are approved instantly. Lower = more permissive.</div>
             </div>
-            <button class="btn btn-primary btn-full" onclick="saveSettings(); showToast('Settings saved!')">Save settings</button>
+
+            <div class="f">
+              <label class="field-lbl">Admin password</label>
+              <input type="password" id="admin-pw" placeholder="New password (leave blank to keep)"/>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="saveAdminSettings()">Save settings</button>
+
+            <!-- Match tester -->
+            <hr style="border:none;border-top:1px solid var(--border);margin:14px 0"/>
+            <div class="f">
+              <label class="field-lbl">Test name matching</label>
+              <input type="text" id="test-name" placeholder="e.g. Gun Lim Seng" oninput="runMatchTest()"/>
+            </div>
+            <div id="test-result" style="font-size:12px;color:var(--ink-m);line-height:1.7;display:none"></div>
           </div>
         </div>
 
@@ -328,16 +261,40 @@
 
 <script src="app.js"></script>
 <script>
-  // Admin-only init
-  document.addEventListener('DOMContentLoaded', () => {
-    // Pre-fill settings
-    const s = getSettings();
-    document.getElementById('wa-link').value = s.waLink || '';
-    document.getElementById('admin-pw').value = '';
-    renderReferralList();
-    renderRequests();
-    updateMetrics();
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  loadAdminSettings();
+  renderRequests();
+  renderReferralList();
+  updateMetrics();
+});
+
+function runMatchTest() {
+  const name = (document.getElementById('test-name')?.value || '').trim();
+  const el   = document.getElementById('test-result');
+  if (!name || name.split(/\s+/).length < 2) { el.style.display='none'; return; }
+
+  const referrals = getReferrals();
+  if (!referrals.length) {
+    el.style.display='block';
+    el.textContent='No referrals loaded yet.';
+    return;
+  }
+
+  const match = findBestMatch(name, referrals, 0);
+  if (!match) { el.style.display='block'; el.textContent='No match found.'; return; }
+
+  const { label } = confidenceLabel(match.score);
+  const breakdown = match.breakdown.map(b =>
+    `<span style="margin-right:8px"><code>${b.real}</code>→<code>${b.masked}</code>: ${b.score}%</span>`
+  ).join('');
+
+  el.style.display='block';
+  el.innerHTML = `
+    <strong>Best match:</strong> ${escHtml(match.referral.name)}<br>
+    <strong>Score:</strong> ${match.score}% — ${label}<br>
+    <strong>Word breakdown:</strong><br><span style="font-size:11px">${breakdown}</span>
+  `;
+}
 </script>
 </body>
 </html>

@@ -1,8 +1,75 @@
-# FSMOne WhatsApp Community App
+# FSMOne Community App v2 — Masked Name Matching
 
-A lightweight, zero-backend signup app for your WhatsApp investment community. Members verify their FSMOne referral before getting the invite link.
+## What's new in v2
 
-**Live demo:** After deploying, your URL will be `https://YOUR-USERNAME.github.io/fsmone-community/`
+**Fuzzy name matching engine** — handles FSMOne's masked name format automatically.
+
+FSMOne masks referral names like this:
+```
+Gun L**** S****     →  matches "Gun Lim Seng"      ✅ 95%
+Ang C*** H**        →  matches "Ang Chai Huat"      ✅ 92%
+Leong K** F***      →  matches "Leong Kai Feng"     ✅ 91%
+```
+
+How the matching works:
+1. Split both names into words
+2. Word count must match (first name, last name, etc.)
+3. First letter of each word must match
+4. Word length (including masked asterisks) must match real name length
+5. Score = weighted average (first word counts 1.5x)
+
+**Three outcomes:**
+- **≥80% match** → Auto-approved instantly, WA link shown
+- **50–79% match** → Flagged for admin review (partial match)
+- **<50% match** → Manual review required
+
+---
+
+## Deploy to GitHub Pages
+
+### Step 1 — Create repo
+1. Go to [github.com](https://github.com) → **+** → New repository
+2. Name: `fsmone-community` → Public → Create
+
+### Step 2 — Upload files
+1. On the repo page → "uploading an existing file"
+2. Upload all 4 files: `index.html`, `admin.html`, `app.js`, `README.md`
+3. Commit changes
+
+### Step 3 — Enable Pages
+1. Repo → **Settings** → **Pages**
+2. Source: Deploy from branch → main → /(root) → Save
+
+### Step 4 — Live!
+```
+Public signup:  https://YOUR-USERNAME.github.io/fsmone-community/
+Admin dashboard: https://YOUR-USERNAME.github.io/fsmone-community/admin.html
+```
+
+---
+
+## How to use
+
+### Adding referral names
+1. Log into FSMOne → Referral Rewards → "View Details"
+2. Copy the masked names (e.g. `Gun L**** S****`) exactly as shown
+3. Go to admin.html → Paste into "FSMOne referrals" → Add names
+4. The app will fuzzy-match future signups automatically
+
+### Or use the Chrome extension
+The Chrome extension syncs masked names directly from FSMOne:
+1. Navigate to your FSMOne referral page
+2. Click "Sync Now" on the banner
+3. In the extension → Copy Names → paste into admin
+
+### Setting the auto-approve threshold
+- 80% (default): safe, high confidence matches only
+- 70%: slightly more permissive
+- 90%: stricter, more manual reviews
+
+### Testing matches
+Admin dashboard → Settings → "Test name matching"  
+Type a real name to see how it scores against your referral list.
 
 ---
 
@@ -10,97 +77,20 @@ A lightweight, zero-backend signup app for your WhatsApp investment community. M
 
 ```
 fsmone-community/
-├── index.html    — Public signup page (share this link)
-├── admin.html    — Admin dashboard (you only)
-├── app.js        — All shared logic (localStorage)
+├── index.html   — Public signup page
+├── admin.html   — Admin dashboard
+├── app.js       — Matching engine + all logic
 └── README.md
 ```
 
 ---
 
-## Deploy to GitHub Pages (5 minutes)
+## Limitations of static (GitHub Pages) version
 
-### Step 1 — Create a GitHub account
-Go to [github.com](https://github.com) and sign up if you don't have an account.
+Data is stored in **localStorage** — only accessible from the same browser.
 
-### Step 2 — Create a new repository
-1. Click the **+** icon → **New repository**
-2. Name it: `fsmone-community`
-3. Set to **Public**
-4. Click **Create repository**
+For multi-device access or team management, upgrade to:
+- **Supabase** (free tier) — real database, accessible anywhere
+- **Firebase** — easy realtime database
 
-### Step 3 — Upload the files
-1. On the repository page, click **"uploading an existing file"**
-2. Drag and drop all 4 files: `index.html`, `admin.html`, `app.js`, `README.md`
-3. Click **Commit changes**
-
-### Step 4 — Enable GitHub Pages
-1. Go to your repo → **Settings** → **Pages** (left sidebar)
-2. Under **Source**, select **Deploy from a branch**
-3. Branch: **main**, folder: **/ (root)**
-4. Click **Save**
-
-### Step 5 — Your app is live!
-Wait ~2 minutes, then visit:
-```
-https://YOUR-USERNAME.github.io/fsmone-community/
-```
-
-**Share this link** with people who signed up using your referral code.
-
-**Admin dashboard:**
-```
-https://YOUR-USERNAME.github.io/fsmone-community/admin.html
-```
-Default password: `admin123` — change it in the Settings panel.
-
----
-
-## How It Works
-
-1. **Someone signs up** on FSMOne using your referral code
-2. You see their name in your FSMOne referral report
-3. **You paste their name** into Admin → FSMOne Referrals panel
-   (or use the Chrome extension to sync automatically)
-4. **They visit your signup page** and submit their name + phone
-5. The app checks if their name matches your referral list
-6. If matched → they get the WhatsApp invite link instantly
-7. If unmatched → you review and approve/reject manually
-
----
-
-## Chrome Extension Integration
-
-After syncing names with the Chrome extension:
-1. Open the extension popup → **Referrals tab**
-2. Click **"Copy Names"**
-3. Paste into Admin → FSMOne Referrals → **Add names**
-
----
-
-## Customisation
-
-### Change admin password
-Login → Settings → enter new password → Save
-
-### Change WhatsApp link
-Login → Settings → paste your WhatsApp community invite link → Save
-
-### Change your name / branding
-Edit `index.html` — look for the `<h1>` and `<p>` in the `.brand` section.
-
----
-
-## Data Storage
-
-Data is stored in **localStorage** — meaning it lives in your browser only.
-
-For multi-device access (e.g., checking admin on your phone), consider:
-- **Option A:** Always use the same device/browser for admin
-- **Option B:** Upgrade to a backend (Firebase/Supabase free tier) — ask Claude to help
-
----
-
-## Security Note
-
-This is a simple static app — anyone who knows the admin URL can try to guess your password. For better security, change the default password immediately after deploying.
+Ask Claude to help build the backend upgrade when ready.
